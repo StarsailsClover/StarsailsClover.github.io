@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: #0a0a0f;
+    color: #f5f1e8;
+    font-family: "Manrope Variable", Manrope, system-ui, sans-serif;
+    line-height: 1.6;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(212, 184, 150, 0.32);
+    color: #f5f1e8;
+  }
+}
+
+@layer components {
+  /* 玻璃拟态卡片 */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(245, 241, 232, 0.06) 0%,
+      rgba(245, 241, 232, 0.02) 100%
+    );
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(245, 241, 232, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(245, 241, 232, 0.16),
+      0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  .glass-strong {
+    background: linear-gradient(
+      135deg,
+      rgba(245, 241, 232, 0.1) 0%,
+      rgba(245, 241, 232, 0.03) 100%
+    );
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid rgba(245, 241, 232, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(245, 241, 232, 0.22),
+      0 40px 80px -24px rgba(0, 0, 0, 0.8);
+  }
+
+  /* 香槟金渐变文字 */
+  .text-gradient-champagne {
+    background: linear-gradient(
+      180deg,
+      #f5f1e8 0%,
+      #d4b896 60%,
+      #b8966a 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-gradient-aurora {
+    background: linear-gradient(120deg, #5eead4 0%, #d4b896 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* 极细分隔线 */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(245, 241, 232, 0.22) 50%,
+      transparent 100%
+    );
+  }
+}
+
+@layer utilities {
+  .font-feature-italic {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 60;
+  }
+
+  /* 自定义滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d4b896 0%, #5eead4 100%);
+    border-radius: 4px;
+  }
+}

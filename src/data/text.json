@@ -1,0 +1,56 @@
+{
+  "brand": {
+    "monogram": "SC",
+    "name": "STARSAILSCLOVER",
+    "displayName": "SailsHuang"
+  },
+  "loading": {
+    "label": "CRYSTAL ATELIER",
+    "progressLabel": "CALIBRATING GLASS"
+  },
+  "overture": {
+    "topLabel": "CRYSTAL ATELIER · MMXXVI",
+    "name": "SailsHuang",
+    "subtitle": "STARSAILSCLOVER · GITHUB",
+    "description": "一场琉璃质感的 3D 作品集 — 把代码、星标与跨世界连接的实验，凝固为可触碰的光。",
+    "scrollHint": "SCROLL"
+  },
+  "identity": {
+    "act": "ACT · 02 IDENTITY",
+    "portraitLabel": "PORTRAIT · 2026",
+    "stats": {
+      "repos": "Repositories",
+      "followers": "Followers",
+      "following": "Following",
+      "stars": "Total Stars"
+    },
+    "joinedTemplate": "账号创建于 {year} 年 · 持续生长中",
+    "viewProfile": "查看主页 →"
+  },
+  "constellation": {
+    "act": "ACT · 03 CONSTELLATION",
+    "title1": "语言",
+    "title2": "星图",
+    "description": "将最近活跃的仓库按主语言聚合，每一颗多面体晶球即一种语言 —— 尺寸映射占比，色相对应社区标识。悬停可唤醒它的低语。",
+    "liveOrbsTemplate": "{count} LANGUAGES · LIVE ORBS",
+    "legend": "LEGEND"
+  },
+  "gallery": {
+    "act": "ACT · 04 GALLERY",
+    "title1": "精选",
+    "title2": "作品",
+    "description": "按星标降序陈列的六件代表作。每张卡片皆通往 GitHub 仓库本体。",
+    "featured": "FEATURED",
+    "demo": "DEMO ↗"
+  },
+  "coda": {
+    "act": "ACT · 05 CODA",
+    "title1": "Let's",
+    "title2": "Connect",
+    "description": "琉璃会冷却，代码仍在生长。若这里曾让你停留一秒，欢迎循光而至。",
+    "githubLabel": "GITHUB",
+    "meteorLabel": "飞流星墅",
+    "footerName": "SailsHuang · StarsailsClover",
+    "footerCreditTemplate": "© {year} · CRAFTED WITH WEBGL & REACT · GUANGZHOU"
+  }
+}
