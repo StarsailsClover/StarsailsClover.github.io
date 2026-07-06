@@ -49,12 +49,13 @@ function PerformanceGovernor({
   quality: RenderQuality;
   onQualityChange: (quality: RenderQuality) => void;
 }) {
-  const state = useMemo(() => ({ frames: 0, elapsed: 0, cooldown: 0 }), []);
+  const state = useMemo(() => ({ frames: 0, elapsed: 0, cooldown: 1.5 }), []);
 
   useFrame((_, delta) => {
+    const safeDelta = Math.min(delta, 0.1);
     state.frames += 1;
-    state.elapsed += delta;
-    state.cooldown = Math.max(0, state.cooldown - delta);
+    state.elapsed += safeDelta;
+    state.cooldown = Math.max(0, state.cooldown - safeDelta);
 
     if (state.elapsed < 2.5 || state.cooldown > 0) return;
 

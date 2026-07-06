@@ -12,7 +12,7 @@
     "topLabel": "CRYSTAL ATELIER · MMXXVI",
     "name": "SailsHuang",
     "subtitle": "STARSAILSCLOVER · GITHUB",
-    "description": "That's Not Elegant.",
+    "description": "That's Not Elegant. 所以我把代码、星标与跨世界连接，收束成一座可以被触碰的玻璃星图。",
     "scrollHint": "SCROLL"
   },
   "identity": {
@@ -31,7 +31,7 @@
     "act": "ACT · 03 CONSTELLATION",
     "title1": "语言",
     "title2": "星图",
-    "description": "你听到它在低语。",
+    "description": "最近活跃的语言在轨道上低语：大小映射占比，色相记录社区的温度。",
     "liveOrbsTemplate": "{count} LANGUAGES · LIVE ORBS",
     "legend": "LEGEND"
   },
@@ -47,7 +47,7 @@
     "act": "ACT · 05 CODA",
     "title1": "Let's",
     "title2": "Connect",
-    "description": "若这里曾让你停留一秒，欢迎循光而至。",
+    "description": "玻璃会折射，代码仍在生长。若这里曾让你停留一秒，欢迎循光而至。",
     "githubLabel": "GITHUB",
     "meteorLabel": "飞流星墅",
     "footerName": "SailsHuang · StarsailsClover",

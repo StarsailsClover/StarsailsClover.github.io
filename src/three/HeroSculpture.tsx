@@ -135,7 +135,7 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
         new THREE.Vector3(kf.pos[0] + ptr.x * 0.25, kf.pos[1] + ptr.y * 0.18, kf.pos[2]),
         0.1,
       );
-      const s = kf.scale;
+      const s = kf.scale * (mobile ? 0.82 : 1);
       group.current.scale.lerp(new THREE.Vector3(s, s, s), 0.1);
     }
     if (ribbon.current) {
@@ -161,9 +161,9 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
         <meshPhysicalMaterial {...coreGlass} />
       </mesh>
       {/* 三颗轨道晶片 */}
-      <CrystalShard radius={2.0} speed={0.45} phase={0} y={0.1} size={0.18} color="#d4b896" />
-      <CrystalShard radius={2.3} speed={-0.32} phase={2.1} y={-0.25} size={0.14} color="#e8b4b8" />
-      <CrystalShard radius={1.8} speed={0.6} phase={4.2} y={0.35} size={0.12} color="#5eead4" />
+      {quality >= 1 && <CrystalShard radius={2.0} speed={0.45} phase={0} y={0.1} size={0.18} color="#d4b896" />}
+      {quality >= 2 && <CrystalShard radius={2.3} speed={-0.32} phase={2.1} y={-0.25} size={0.14} color="#e8b4b8" />}
+      {quality >= 2 && <CrystalShard radius={1.8} speed={0.6} phase={4.2} y={0.35} size={0.12} color="#5eead4" />}
     </group>
   );
 }

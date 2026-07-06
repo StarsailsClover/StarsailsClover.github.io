@@ -18,6 +18,8 @@ export default function Coda() {
             "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.85) 70%, #0a0a0f 100%)",
         }}
       />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-champagne/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-24 right-10 h-64 w-64 rounded-full bg-aurora/10 blur-3xl" />
 
       <div className="relative flex flex-col items-center">
         <Reveal>
@@ -50,7 +52,7 @@ export default function Coda() {
               whileHover={{ y: -3 }}
               whileTap={{ y: 0 }}
               transition={{ type: "spring", stiffness: 320, damping: 22 }}
-              className="group inline-flex items-center gap-3 rounded-full glass-strong px-8 py-4"
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-full glass-strong px-8 py-4 sm:w-auto"
             >
               <Github size={18} className="text-ivory" strokeWidth={1.5} />
               <span className="font-numeric text-sm tracking-[0.2em] text-ivory">
@@ -70,7 +72,7 @@ export default function Coda() {
               whileHover={{ y: -3 }}
               whileTap={{ y: 0 }}
               transition={{ type: "spring", stiffness: 320, damping: 22 }}
-              className="group inline-flex items-center gap-3 rounded-full glass px-8 py-4"
+              className="group inline-flex w-full items-center justify-center gap-3 rounded-full glass px-8 py-4 sm:w-auto"
               style={{ boxShadow: "inset 0 1px 0 rgba(245,241,232,0.12), 0 0 0 1px rgba(94,234,212,0.25)" }}
             >
               <Sparkles size={18} className="text-aurora" strokeWidth={1.5} />
