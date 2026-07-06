@@ -8,30 +8,22 @@ import {
   ToneMapping,
 } from "@react-three/postprocessing";
 import { ToneMappingMode, BlendFunction, KernelSize } from "postprocessing";
+import type { RenderQuality } from "./Scene";
 
-// 检测移动端以决定是否启用重后处理
-function isMobile() {
-  if (typeof navigator === "undefined") return false;
-  return (
-    /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ||
-    (typeof window !== "undefined" && window.innerWidth < 768)
-  );
-}
-
-export default function PostFX() {
-  const mobile = typeof window !== "undefined" ? isMobile() : false;
-  const offset = new THREE.Vector2(0.0006, 0.0006);
+export default function PostFX({ quality, mobile }: { quality: RenderQuality; mobile: boolean }) {
+  const offset = new THREE.Vector2(0.00035 + quality * 0.0001, 0.00035 + quality * 0.0001);
+  const bloom = mobile ? 0.28 + quality * 0.08 : 0.38 + quality * 0.12;
 
   return (
-    <EffectComposer multisampling={mobile ? 0 : 2}>
+    <EffectComposer multisampling={quality >= 3 && !mobile ? 2 : 0}>
       <Bloom
-        intensity={mobile ? 0.4 : 0.7}
+        intensity={bloom}
         luminanceThreshold={0.78}
         luminanceSmoothing={0.18}
-        mipmapBlur
-        kernelSize={KernelSize.LARGE}
+        mipmapBlur={quality >= 1}
+        kernelSize={quality >= 2 ? KernelSize.LARGE : KernelSize.MEDIUM}
       />
-      {!mobile && (
+      {quality >= 3 && !mobile && (
         <DepthOfField
           focusDistance={0.018}
           focalLength={0.052}
@@ -39,12 +31,14 @@ export default function PostFX() {
           height={480}
         />
       )}
-      <ChromaticAberration
-        offset={offset}
-        radialModulation
-        modulationOffset={0.3}
-        blendFunction={BlendFunction.NORMAL}
-      />
+      {quality >= 1 && (
+        <ChromaticAberration
+          offset={offset}
+          radialModulation
+          modulationOffset={0.3}
+          blendFunction={BlendFunction.NORMAL}
+        />
+      )}
       <Vignette eskil={false} offset={0.28} darkness={0.62} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
     </EffectComposer>

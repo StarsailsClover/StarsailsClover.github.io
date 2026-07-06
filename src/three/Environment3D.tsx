@@ -1,9 +1,10 @@
 import { Environment, Lightformer } from "@react-three/drei";
+import type { RenderQuality } from "./Scene";
 
 // 程序化环境贴图：用 Lightformer 构造冷暖渐变环境，无需外部 HDRI
-export default function Environment3D() {
+export default function Environment3D({ quality }: { quality: RenderQuality }) {
   return (
-    <Environment resolution={256} frames={1}>
+    <Environment resolution={quality >= 2 ? 256 : 128} frames={1}>
       {/* 顶部冷光 */}
       <Lightformer
         intensity={1.4}

@@ -2,7 +2,8 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import { useGlassMaterialProps } from "./materials/GlassMaterial";
-import { scrollState, smoothPointer, smoothScroll } from "@/lib/scrollState";
+import { smoothPointer, smoothScroll } from "@/lib/scrollState";
+import type { RenderQuality } from "./Scene";
 
 // 一组关键帧，按滚动进度插值雕塑的位置 / 缩放 / 旋转速度
 const KEYFRAMES = [
@@ -85,7 +86,7 @@ function CrystalShard({
   );
 }
 
-export default function HeroSculpture() {
+export default function HeroSculpture({ quality, mobile }: { quality: RenderQuality; mobile: boolean }) {
   const group = useRef<THREE.Group>(null);
   const ribbon = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
@@ -110,7 +111,9 @@ export default function HeroSculpture() {
 
   // 噪声变形几何（一次性）
   const ribbonGeo = useMemo(() => {
-    const g = new THREE.TorusKnotGeometry(1.05, 0.32, 240, 18, 2, 3);
+    const radialSegments = [96, 144, 192, 240][quality];
+    const tubularSegments = [8, 12, 16, 18][quality];
+    const g = new THREE.TorusKnotGeometry(1.05, 0.32, radialSegments, tubularSegments, 2, 3);
     const pos = g.attributes.position as THREE.BufferAttribute;
     const v = new THREE.Vector3();
     for (let i = 0; i < pos.count; i++) {
@@ -121,7 +124,7 @@ export default function HeroSculpture() {
     }
     g.computeVertexNormals();
     return g;
-  }, []);
+  }, [quality]);
 
   useFrame((_, delta) => {
     const p = smoothScroll(delta);
