@@ -90,6 +90,8 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
   const group = useRef<THREE.Group>(null);
   const ribbon = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
+  const innerRing = useRef<THREE.Mesh>(null);
+  const outerHalo = useRef<THREE.Mesh>(null);
 
   const ribbonGlass = useGlassMaterialProps({
     color: "#f5f1e8",
@@ -108,11 +110,21 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
     attenuationColor: "#5eead4",
     attenuationDistance: 0.8,
   });
+  const haloGlass = useGlassMaterialProps({
+    color: "#f5f1e8",
+    thickness: 0.35,
+    roughness: 0.02,
+    iridescence: 1,
+    attenuationColor: "#d4b896",
+    attenuationDistance: 1.8,
+    envMapIntensity: quality >= 4 ? 2.2 : 1.4,
+    opacity: quality >= 4 ? 0.72 : 0.48,
+  });
 
   // 噪声变形几何（一次性）
   const ribbonGeo = useMemo(() => {
-    const radialSegments = [96, 144, 192, 240][quality];
-    const tubularSegments = [8, 12, 16, 18][quality];
+    const radialSegments = [96, 144, 192, 240, 320][quality];
+    const tubularSegments = [8, 12, 16, 18, 24][quality];
     const g = new THREE.TorusKnotGeometry(1.05, 0.32, radialSegments, tubularSegments, 2, 3);
     const pos = g.attributes.position as THREE.BufferAttribute;
     const v = new THREE.Vector3();
@@ -147,6 +159,14 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
       core.current.rotation.x -= delta * kf.spin * 0.6;
       core.current.rotation.y -= delta * kf.spin * 0.9;
     }
+    if (innerRing.current) {
+      innerRing.current.rotation.x += delta * kf.spin * 0.45;
+      innerRing.current.rotation.z -= delta * kf.spin * 0.8;
+    }
+    if (outerHalo.current) {
+      outerHalo.current.rotation.y -= delta * kf.spin * 0.28;
+      outerHalo.current.rotation.z += delta * kf.spin * 0.18;
+    }
   });
 
   return (
@@ -160,10 +180,23 @@ export default function HeroSculpture({ quality, mobile }: { quality: RenderQual
         <icosahedronGeometry args={[1, 1]} />
         <meshPhysicalMaterial {...coreGlass} />
       </mesh>
+      {quality >= 3 && (
+        <mesh ref={innerRing} scale={0.78} rotation={[Math.PI / 2.6, 0.2, 0.4]}>
+          <torusGeometry args={[1.04, 0.018, quality >= 4 ? 18 : 10, quality >= 4 ? 192 : 96]} />
+          <meshPhysicalMaterial {...haloGlass} />
+        </mesh>
+      )}
+      {quality >= 4 && (
+        <mesh ref={outerHalo} scale={1.38} rotation={[0.35, 0.55, 0.2]}>
+          <torusGeometry args={[1.35, 0.012, 12, 240]} />
+          <meshPhysicalMaterial {...haloGlass} opacity={0.42} />
+        </mesh>
+      )}
       {/* 三颗轨道晶片 */}
       {quality >= 1 && <CrystalShard radius={2.0} speed={0.45} phase={0} y={0.1} size={0.18} color="#d4b896" />}
       {quality >= 2 && <CrystalShard radius={2.3} speed={-0.32} phase={2.1} y={-0.25} size={0.14} color="#e8b4b8" />}
       {quality >= 2 && <CrystalShard radius={1.8} speed={0.6} phase={4.2} y={0.35} size={0.12} color="#5eead4" />}
+      {quality >= 4 && <CrystalShard radius={2.55} speed={0.24} phase={5.4} y={0.02} size={0.1} color="#f5f1e8" />}
     </group>
   );
 }

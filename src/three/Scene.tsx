@@ -16,13 +16,14 @@ interface SceneProps {
   onCreated?: () => void;
 }
 
-export type RenderQuality = 0 | 1 | 2 | 3;
+export type RenderQuality = 0 | 1 | 2 | 3 | 4;
 
 const QUALITY_DPR: Record<RenderQuality, [number, number]> = {
   0: [0.75, 1],
   1: [0.9, 1.25],
   2: [1, 1.5],
   3: [1, 2],
+  4: [1, 2.5],
 };
 
 function isMobile() {
@@ -39,6 +40,7 @@ function initialQuality(mobile: boolean): RenderQuality {
     ? 8
     : (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 4;
   if (mobile || cores <= 4 || memory <= 4) return 1;
+  if (cores >= 12 && memory >= 8) return 3;
   return 2;
 }
 
@@ -62,7 +64,7 @@ function PerformanceGovernor({
     const avgFps = state.frames / state.elapsed;
     let next = quality;
     if (avgFps < 45 && quality > 0) next = (quality - 1) as RenderQuality;
-    if (avgFps > 58 && quality < 3) next = (quality + 1) as RenderQuality;
+    if (avgFps > 58 && quality < 4) next = (quality + 1) as RenderQuality;
 
     state.frames = 0;
     state.elapsed = 0;
@@ -79,7 +81,7 @@ function PerformanceGovernor({
 export default function Scene({ languages, particleCount, onCreated }: SceneProps) {
   const mobile = typeof window !== "undefined" ? isMobile() : false;
   const [quality, setQuality] = useState<RenderQuality>(() => initialQuality(mobile));
-  const particles = particleCount ?? Math.round((mobile ? 220 : 760) * [0.45, 0.65, 0.85, 1][quality]);
+  const particles = particleCount ?? Math.round((mobile ? 220 : 760) * [0.45, 0.65, 0.85, 1, 1.28][quality]);
   const dpr = QUALITY_DPR[quality];
   const shadows = !mobile && quality >= 2;
 
@@ -93,7 +95,7 @@ export default function Scene({ languages, particleCount, onCreated }: SceneProp
         alpha: false,
         powerPreference: "high-performance",
         toneMapping: THREE.ACESFilmicToneMapping,
-        toneMappingExposure: 1.05,
+        toneMappingExposure: quality >= 4 ? 1.12 : 1.05,
       }}
       dpr={dpr}
       camera={{ fov: mobile ? 48 : 42, near: 0.1, far: 100, position: [0, mobile ? 0.25 : 0, mobile ? 7.4 : 6.5] }}
